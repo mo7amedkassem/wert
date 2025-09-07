@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Library Management System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Book" asp-action="Index">Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Book" asp-action="Index">Books</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    @{
+                        var isLoggedIn = Context.Request.Cookies.ContainsKey("AuthMemberId");
+                        var role = Context.Request.Cookies["AuthRole"];
+                    }
+                    @if (!isLoggedIn)
+                    {
+                        <a class="btn btn-outline-light btn-sm" asp-controller="Login" asp-action="Index">Login</a>
+                    }
+                    else
+                    {
+                        <span class="text-light me-2">@role</span>
+                        <form asp-controller="Login" asp-action="ConfirmLogout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3 mt-5">
+        <p class="mb-0">© 2025 Library Management System | Made with ❤ using ASP.NET Core</p>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

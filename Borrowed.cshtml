@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Library_Management.Models.Borrowing>
+
+<h2>My Borrowed Books</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Borrowed At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Book.Title</td>
+                <td>@item.Book.Author</td>
+                <td>@item.BorrowedAt.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>

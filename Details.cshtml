@@ -1,0 +1,28 @@
+﻿@model Library_Management.Models.Borrowing
+
+@{
+    ViewData["Title"] = "Borrowing Details";
+}
+
+<h1>Borrowing Details</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Book</dt>
+        <dd class="col-sm-9">@Model.Book?.Title</dd>
+
+        <dt class="col-sm-3">Member</dt>
+        <dd class="col-sm-9">@Model.member?.FullName</dd>
+
+        <dt class="col-sm-3">Borrowed At</dt>
+        <dd class="col-sm-9">@Model.BorrowedAt.ToString("yyyy-MM-dd")</dd>
+
+        <dt class="col-sm-3">Return Date</dt>
+        <dd class="col-sm-9">@(Model.ReturnDate.HasValue? Model.ReturnDate.Value.ToString("yyyy-MM-dd") : "Not Returned")</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-bookId="@Model.BookId" asp-route-memberId="@Model.MemberId" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

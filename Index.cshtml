@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المكتبة</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar-custom {
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section {
+            background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            position: relative;
+            color: white;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 40px;
+        }
+
+            .hero-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.6);
+                border-radius: 0 0 20px 20px;
+            }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .btn-custom:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                color: white;
+            }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+            .section-title::after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 4px;
+                background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+                margin: 15px auto;
+                border-radius: 2px;
+            }
+
+        .quick-actions {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        /* تأثيرات للزرود */
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color) 0%, #2980b9 100%);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background: linear-gradient(90deg, var(--success-color) 0%, #27ae60 100%);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-warning {
+            background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .btn-primary:hover, .btn-success:hover, .btn-warning:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-book-open me-2"></i>نظام إدارة المكتبة
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Books" asp-action="Index">الكتب</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Members" asp-action="Index">الأعضاء</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Borrowings" asp-action="Index">الاستعارات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">التقارير</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم البطل -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="display-4 fw-bold mb-4">مرحباً بك في نظام إدارة المكتبة</h1>
+                <p class="lead mb-4">نظام متكامل لإدارة الكتب والأعضاء وعمليات الاستعارة بطريقة سهلة وفعالة</p>
+                <a href="#features" class="btn btn-light btn-lg">استكشف الميزات <i class="fas fa-arrow-down ms-2"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- الإحصائيات -->
+    <section class="container mb-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-book-open fa-2x"></i>
+                    <div class="stats-number">1,248</div>
+                    <p>كتاب متاح في المكتبة</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-users fa-2x"></i>
+                    <div class="stats-number">586</div>
+                    <p>عضو مسجل في النظام</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-exchange-alt fa-2x"></i>
+                    <div class="stats-number">324</div>
+                    <p>عملية استعارة نشطة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الميزات -->
+    <section id="features" class="container mb-5">
+        <h2 class="section-title">إدارة النظام</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="card-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="card-title">إدارة الكتب</h3>
+                        <p class="card-text">أضف، حرر، احذف، وأدر الكتب في مكتبتك بسهولة مع نظام تصنيف متقدم</p>
+                        <a asp-controller="Books" asp-action="Index" class="btn btn-primary mt-3">إدارة الكتب</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="card-title">إدارة الأعضاء</h3>
+                        <p class="card-text">سجل الأعضاء الجدد، أدر بياناتهم، وتابع تاريخ استعاراتهم</p>
+                        <a asp-controller="Members" asp-action="Index" class="btn btn-success mt-3">إدارة الأعضاء</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="card-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3 class="card-title">إدارة الاستعارات</h3>
+                        <p class="card-text">تابع عمليات الاستعارة، الإرجاع، والتأخيرات مع نظام تنبيهات متكامل</p>
+                        <a asp-controller="Borrowings" asp-action="Index" class="btn btn-warning mt-3">إدارة الاستعارات</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- إجراءات سريعة -->
+    <section class="container mb-5">
+        <div class="quick-actions">
+            <h2 class="section-title">إجراءات سريعة</h2>
+            <div class="row g-4">
+                <div class="col-md-4 text-center">
+                    <a href="#" class="btn btn-custom mb-2"><i class="fas fa-plus me-2"></i>إضافة كتاب جديد</a>
+                    <p class="text-muted small">أضف كتاب جديد إلى المكتبة</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="#" class="btn btn-custom mb-2"><i class="fas fa-user-plus me-2"></i>تسجيل عضو جديد</a>
+                    <p class="text-muted small">سجل عضو جديد في النظام</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="#" class="btn btn-custom mb-2"><i class="fas fa-hand-holding-usd me-2"></i>تسجيل استعارة</a>
+                    <p class="text-muted small">سجل عملية استعارة جديدة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4>نظام إدارة المكتبة</h4>
+                    <p>نظام متكامل لإدارة كافة عمليات المكتبة بشكل منظم وفعال</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4>روابط سريعة</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">الرئيسية</a></li>
+                        <li><a href="#" class="text-light">عن النظام</a></li>
+                        <li><a href="#" class="text-light">الدعم الفني</a></li>
+                        <li><a href="#" class="text-light">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>اتصل بنا</h4>
+                    <p><i class="fas fa-envelope me-2"></i> info@library.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +123 456 7890</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> المدينة، الدولة</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p>© 2023 نظام إدارة المكتبة. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

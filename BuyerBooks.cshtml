@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Library_Management.ModelViews.Book>
+
+@{
+    ViewData["Title"] = "Available Books";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Available Books</h1>
+    <a class="btn btn-success" asp-action="BorrowedBooks">
+        <span class="me-1">My Borrowed Books</span>
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>ISBN</th>
+                        <th class="text-center">Copies</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Author</td>
+                            <td class="text-monospace">@item.ISBN</td>
+                            <td class="text-center">@item.CopiesAvailable</td>
+                            <td class="text-end">
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                    @if (item.CopiesAvailable > 0)
+                                    {
+                                        <form asp-action="Borrow" method="post" class="d-inline">
+                                            <input type="hidden" name="bookId" value="@item.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm">Borrow</button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-secondary btn-sm" disabled>Out of Stock</button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">No books available.</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
